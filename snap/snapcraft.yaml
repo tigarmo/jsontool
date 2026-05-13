@@ -1,0 +1,31 @@
+name: jsontool
+base: core24
+version: "1.0"
+summary: Pretty-print and query JSON files from the command line
+description: |
+  jsontool reads a JSON file and either pretty-prints it as a formatted
+  table or looks up a value by dot-notation key path (e.g. foo.bar.0).
+
+grade: devel
+confinement: strict
+
+parts:
+  jsontool:
+    plugin: cmake
+    source: .
+    cmake-parameters:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+    build-packages:
+      - git
+      - nlohmann-json3-dev
+      - libfmt-dev
+      - libcli11-dev
+    stage-packages:
+      - libfmt9
+
+apps:
+  jsontool:
+    command: usr/bin/jsontool
+    plugs:
+      - home
